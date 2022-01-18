@@ -196,10 +196,10 @@ spec:
           {{- end }}
           # Added by Janusz Kujawa
           - name: istiod-tls-va
-            mountPath: {{ .Values.pilot.extra.tlsMount }}
+            mountPath: {{ .Values.pilot.extra.mount.tls }}
             readOnly: true
           - name: ca-root-va
-            mountPath: {{ .Values.pilot.extra.caMount }}
+            mountPath: {{ .Values.pilot.extra.mount.ca }}
             readOnly: true
 
       volumes:
