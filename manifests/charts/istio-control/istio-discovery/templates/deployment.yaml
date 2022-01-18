@@ -97,9 +97,12 @@ spec:
 {{- end }}
           - --keepaliveMaxServerConnectionAge
           - "{{ .Values.pilot.keepaliveMaxServerConnectionAge }}"
-          - --tlsCertFile=/etc/cert-manager/tls/tls.crt
-          - --tlsKeyFile=/etc/cert-manager/tls/tls.key
-          - --caCertFile=/etc/cert-manager/ca/root-cert.pem
+          # Janusz Kujawa Added
+{{- if .Values.pilot.extra }}
+          - --tlsKeyFile={{ .Values.pilot.extra.options.tlsKeyPath  }}
+          - --tlsCertFile={{ .Values.pilot.extra.options.tlsCertPath }}
+          - --caCertFile={{ .Values.pilot.extra.options.rootCaPath  }}
+{{- end }}
           ports:
           - containerPort: 8080
             protocol: TCP
@@ -193,10 +196,10 @@ spec:
           {{- end }}
           # Added by Janusz Kujawa
           - name: istiod-tls-va
-            mountPath: /etc/cert-manager/tls
+            mountPath: {{ .Values.pilot.extra.tlsMount }}
             readOnly: true
           - name: ca-root-va
-            mountPath: /etc/cert-manager/ca
+            mountPath: {{ .Values.pilot.extra.caMount }}
             readOnly: true
 
       volumes:

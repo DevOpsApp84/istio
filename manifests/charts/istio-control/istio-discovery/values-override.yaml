@@ -5,13 +5,13 @@ pilot:
 
   # Extra Mount Added by Janusz Kujawa
   extra:
-    camount: /etc/cert-manager/ca
-    certmanagermount: /etc/cert-manager/tls
+    caMount: /etc/cert-manager/ca
+    tlsMount: /etc/cert-manager/tls
 
     options:
-      tlskeypath: /etc/cert-manager/tls/tls.crt
-      tlscrtpath: /etc/cert-manager/tls/tls.key
-      rootcertpath: /etc/cert-manager/ca/root-cert.pem
+      tlsKeyPath: /etc/cert-manager/tls/tls.crt
+      tlsCertPath: /etc/cert-manager/tls/tls.key
+      rootCaPath: /etc/cert-manager/ca/root-cert.pem
 
   autoscaleEnabled: true
   autoscaleMin: 1
