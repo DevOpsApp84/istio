@@ -3,6 +3,7 @@ pilot:
 
   # Extra mount
   extra:
+    create: true
     mount:
       ca: /etc/cert-manager/ca
       tls: /etc/cert-manager/tls

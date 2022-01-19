@@ -98,7 +98,7 @@ spec:
           - --keepaliveMaxServerConnectionAge
           - "{{ .Values.pilot.keepaliveMaxServerConnectionAge }}"
           # Janusz Kujawa Added
-{{- if .Values.pilot.extra }}
+{{- if .Values.pilot.extra.create }}
           - --tlsKeyFile={{ .Values.pilot.extra.options.tlsKeyPath  }}
           - --tlsCertFile={{ .Values.pilot.extra.options.tlsCertPath }}
           - --caCertFile={{ .Values.pilot.extra.options.rootCaPath  }}
@@ -194,14 +194,15 @@ spec:
           - name: extracacerts
             mountPath: /cacerts
           {{- end }}
-          # Added by Janusz Kujawa
+          # Janusz Kujawa Added
+{{- if .Values.pilot.extra.create }}
           - name: istiod-tls-va
             mountPath: {{ .Values.pilot.extra.mount.tls }}
             readOnly: true
           - name: ca-root-va
             mountPath: {{ .Values.pilot.extra.mount.ca }}
             readOnly: true
-
+{{- end }}
       volumes:
       # Technically not needed on this pod - but it helps debugging/testing SDS
       # Should be removed after everything works.
@@ -217,7 +218,8 @@ spec:
                 expirationSeconds: 43200
                 path: istio-token
       {{- end }}
-      # Added by Janusz Kujawa
+      # Janusz Kujawa Added
+{{- if .Values.pilot.extra.create }}
       - name: istiod-tls-va
         secret:
           secretName: istiod-tls
@@ -225,6 +227,7 @@ spec:
         configMap:
           name: istio-ca-root-cert
           defaultMode: 420
+{{- end }}
       # Optional: user-generated root
       - name: cacerts
         secret:
